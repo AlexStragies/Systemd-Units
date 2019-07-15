@@ -1,0 +1,15 @@
+[Unit]
+Description=On demand Work Socks tunnel
+After=network.target socksProxyHelper.socket
+Requires=socksProxyHomeHelper.socket socksProxyHome.service
+After=socksProxyHome.service
+BindsTo=socksProxyHome.service
+
+[Service]
+#Type=simple
+#Accept=false
+ExecStart=/lib/systemd/systemd-socket-proxyd 127.0.0.1:9118
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

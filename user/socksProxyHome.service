@@ -1,0 +1,8 @@
+[Unit]
+Description=SocksProxy Over Bridge Host
+
+[Service]
+ExecStart=/usr/bin/ssh -Nk socks-p-to-home
+
+[Install]
+WantedBy=default.target

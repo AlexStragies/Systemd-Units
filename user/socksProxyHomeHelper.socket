@@ -1,0 +1,10 @@
+[Unit]
+Description=On Demand Socks proxy to Home
+
+[Socket]
+ListenStream=127.0.0.1:8118
+#BindToDevice=lo
+#Accept=yes
+
+[Install]
+WantedBy=sockets.target
