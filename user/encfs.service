@@ -1,0 +1,24 @@
+[Unit]
+Description="ENCFS via Afuse automounter"
+AssertPathExists=%h/.encfs/
+AssertPathExists=%h/encfs/
+AssertFileIsExecutable=/usr/bin/afuse
+AssertFileIsExecutable=/usr/bin/encfs
+
+[Service]
+Type=forking
+WorkingDirectory=%h/encfs
+ExecStart=/usr/bin/afuse . \
+    -o fsname=AutoENC \
+    -o timeout=300 \
+    -o auto_unmount \
+    -o flushwrites \
+    -o mount_template="encfs --ondemand --delaymount --idle=6 --extpass=%h/.encfs/%%r.key.sh --config=%h/.encfs/%%r.xml %h/.encfs/%%r/ %%m -- -o fsname=Enc-%%r -o uid=%U -o gid=%G" \
+    -o unmount_template="fusermount -u -z %%m"
+Restart=always
+PrivateTmp=true
+#NoNewPrivileges=true
+#Environment=
+
+[Install]
+WantedBy=default.target
